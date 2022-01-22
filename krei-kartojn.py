@@ -146,26 +146,27 @@ with open('vortoj.tsv', 'rt') as f:
             all_words.add(word)
             word_list.append(word)
 
-n_words_first_pages = WORDS_PER_PAGE
+skip_points = set()
 
 # If there are enough words to cover two pages then try to balance the
-# number of words on the first two pages so that if it is printed
+# number of words on the last pair of pages so that if it is printed
 # double-sided then there will be a card on each side of the page in
 # the same location.
 
-if len(word_list) > WORDS_PER_PAGE * 2:
+n_pages = (len(word_list) + WORDS_PER_PAGE - 1) // WORDS_PER_PAGE
+
+if n_pages >= 2:
     words_in_last_two_pages = len(word_list) % WORDS_PER_PAGE + WORDS_PER_PAGE
-    n_words_first_pages = words_in_last_two_pages // 2
+    last_page_pair = (n_pages & ~1) - 2
+    page_split_point = words_in_last_two_pages // 2
+    skip_points.add(last_page_pair * WORDS_PER_PAGE + page_split_point)
+    skip_points.add((last_page_pair + 1) * WORDS_PER_PAGE +
+                    page_split_point)
 
 generator = CardGenerator()
 
 for word in word_list:
-    page_num = generator.word_num // WORDS_PER_PAGE
-
-    if page_num <= 1:
-        word_in_page = generator.word_num % WORDS_PER_PAGE
-
-        if word_in_page == n_words_first_pages:
-            generator.skip_to_page_start()
+    if generator.word_num in skip_points:
+        generator.skip_to_page_start()
 
     generator.add_word(word)
