@@ -27,8 +27,8 @@ CARDS_START = (PAGE_WIDTH / 2 -
                LINES_PER_PAGE * CARD_SIZE / 2)
 
 class CardGenerator:
-    def __init__(self):
-        self.surface = cairo.PDFSurface("krucindiko.pdf",
+    def __init__(self, filename):
+        self.surface = cairo.PDFSurface(filename,
                                         PAGE_WIDTH * POINTS_PER_MM,
                                         PAGE_HEIGHT * POINTS_PER_MM)
 
@@ -146,6 +146,17 @@ with open('vortoj.tsv', 'rt') as f:
             all_words.add(word)
             word_list.append(word)
 
+def generate_pdf(filename, word_list, skip_points=None):
+    generator = CardGenerator(filename)
+
+    for word in word_list:
+        if skip_points is not None and generator.word_num in skip_points:
+            generator.skip_to_page_start()
+
+        generator.add_word(word)
+
+generate_pdf("krucindiko-unuflanke.pdf", word_list)
+
 skip_points = set()
 
 # If there are enough words to cover two pages then try to balance the
@@ -167,10 +178,4 @@ if n_pages >= 2:
 if (n_pages & 1) == 1:
     skip_points.add((n_pages - 1) * WORDS_PER_PAGE + WORDS_PER_PAGE // 2)
 
-generator = CardGenerator()
-
-for word in word_list:
-    if generator.word_num in skip_points:
-        generator.skip_to_page_start()
-
-    generator.add_word(word)
+generate_pdf("krucindiko-duflanke.pdf", word_list, skip_points)
