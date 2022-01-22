@@ -118,6 +118,9 @@ class CardGenerator:
 
         self.word_num += 1
 
+    def skip_to_page_start(self):
+        self.word_num = (self.word_num // WORDS_PER_PAGE + 1) * WORDS_PER_PAGE
+
 line_num = 0
 all_words = set()
 word_list = []
@@ -163,6 +166,6 @@ for word in word_list:
         word_in_page = generator.word_num % WORDS_PER_PAGE
 
         if word_in_page == n_words_first_pages:
-            generator.word_num += WORDS_PER_PAGE - n_words_first_pages
+            generator.skip_to_page_start()
 
     generator.add_word(word)
