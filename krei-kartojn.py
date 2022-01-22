@@ -163,6 +163,10 @@ if n_pages >= 2:
     skip_points.add((last_page_pair + 1) * WORDS_PER_PAGE +
                     page_split_point)
 
+# If there is an odd number of pages then split the last page too
+if (n_pages & 1) == 1:
+    skip_points.add((n_pages - 1) * WORDS_PER_PAGE + WORDS_PER_PAGE // 2)
+
 generator = CardGenerator()
 
 for word in word_list:
