@@ -65,10 +65,7 @@ class CardGenerator:
         card_in_page = card_num % CARDS_PER_PAGE
 
         self.cr.save()
-        self.cr.translate(card_in_page %
-                          COLUMNS_PER_PAGE *
-                          CARD_SIZE +
-                          CARDS_START[0],
+        self.cr.translate(CARDS_START[0],
                           card_in_page //
                           COLUMNS_PER_PAGE *
                           CARD_SIZE +
@@ -79,6 +76,16 @@ class CardGenerator:
                 self.cr.show_page()
 
             self._draw_outlines()
+
+        page_num = card_num // CARDS_PER_PAGE
+        column = card_num % COLUMNS_PER_PAGE
+
+        # Flip the column on odd pages so that the cards on the last
+        # page will be behind the cards on the second-to-last page
+        if (page_num & 1) == 1:
+            column = COLUMNS_PER_PAGE - 1 - column
+
+        self.cr.translate(column * CARD_SIZE, 0.0)
 
         self.cr.save()
         self.cr.set_dash([3, 1])
