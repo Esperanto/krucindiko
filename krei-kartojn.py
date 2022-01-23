@@ -97,10 +97,12 @@ class CardGenerator:
         self.cr.stroke()
         self.cr.restore()
 
-        if word_in_card == 1:
-            self.cr.translate(CARD_SIZE / 2.0, CARD_SIZE * 0.75)
+        if word_in_card == 0:
+            self.cr.translate(CARD_SIZE / 2.0, CARD_SIZE / 4.0)
             self.cr.rotate(math.pi)
             self.cr.translate(-CARD_SIZE / 2.0, -CARD_SIZE / 4.0)
+        else:
+            self.cr.translate(0.0, CARD_SIZE * word_in_card / 2.0)
 
         self.cr.set_font_size(CARD_SIZE / 9.0)
 
