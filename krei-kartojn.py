@@ -26,6 +26,8 @@ CARDS_START = (PAGE_WIDTH / 2 -
                PAGE_HEIGHT / 2 -
                LINES_PER_PAGE * CARD_SIZE / 2)
 
+CROSSHAIR_SIZE = 5
+
 class CardGenerator:
     def __init__(self, filename):
         self.surface = cairo.PDFSurface(filename,
@@ -42,22 +44,23 @@ class CardGenerator:
 
         self.word_num = 0
 
-    def _draw_outlines(self):
-        self.cr.set_source_rgb(0, 0, 0)
+    def _draw_crosshairs(self):
+        self.cr.save()
 
-        self.cr.rectangle(0, 0,
-                          CARD_SIZE * COLUMNS_PER_PAGE,
-                          CARD_SIZE * LINES_PER_PAGE)
+        self.cr.set_source_rgb(0.5, 0.5, 0.5)
 
-        for i in range(1, COLUMNS_PER_PAGE):
-            self.cr.move_to(CARD_SIZE * i, 0)
-            self.cr.rel_line_to(0, CARD_SIZE * LINES_PER_PAGE)
-
-        for i in range(1, LINES_PER_PAGE):
-            self.cr.move_to(0, CARD_SIZE * i)
-            self.cr.rel_line_to(CARD_SIZE * COLUMNS_PER_PAGE, 0)
+        for y in range(0, LINES_PER_PAGE + 1):
+            for x in range(0, COLUMNS_PER_PAGE + 1):
+                self.cr.move_to(CARD_SIZE * x,
+                                CARD_SIZE * y - CROSSHAIR_SIZE / 2.0)
+                self.cr.rel_line_to(0, CROSSHAIR_SIZE)
+                self.cr.rel_move_to(CROSSHAIR_SIZE / 2.0,
+                                    -CROSSHAIR_SIZE / 2.0)
+                self.cr.rel_line_to(-CROSSHAIR_SIZE, 0.0)
 
         self.cr.stroke()
+
+        self.cr.restore()
 
     def add_word(self, word):
         word_in_card = self.word_num % WORDS_PER_CARD
@@ -75,7 +78,7 @@ class CardGenerator:
             if card_num != 0:
                 self.cr.show_page()
 
-            self._draw_outlines()
+            self._draw_crosshairs()
 
         page_num = card_num // CARDS_PER_PAGE
         column = card_num % COLUMNS_PER_PAGE
