@@ -3,8 +3,8 @@
 
 Se vi volas simple havi la PDF vi povas elŝuti ĝin ĉi tie:
 
-- [Versio](https://esperanto.github.io/krucindiko-duflanke.pdf) por printi ambaŭflanke du la paĝo
-- [Versio](https://esperanto.github.io/krucindiko-unuflanke.pdf) por printi unuflanke du la paĝo
+- [Versio](https://esperanto.github.io/krucindiko-duflanke.pdf) por printi ambaŭflanke de la paĝo
+- [Versio](https://esperanto.github.io/krucindiko-unuflanke.pdf) por printi unuflanke de la paĝo
 
 Aliokaze, por ruli la skripton oni unue devas instali la dependajn
 pakaĵojn. Ĉe Fedora oni povas ruli la jenan komandon:
