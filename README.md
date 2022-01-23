@@ -3,8 +3,8 @@
 
 Se vi volas simple havi la PDF vi povas elŝuti ĝin ĉi tie:
 
-- [Versio](https://esperanto.github.io/krucindiko-duflanke.pdf) por printi ambaŭflanke de la paĝo
-- [Versio](https://esperanto.github.io/krucindiko-unuflanke.pdf) por printi unuflanke de la paĝo
+- [Versio](https://esperanto.github.io/krucindiko/krucindiko-duflanke.pdf) por printi ambaŭflanke de la paĝo
+- [Versio](https://esperanto.github.io/krucindiko/krucindiko-unuflanke.pdf) por printi unuflanke de la paĝo
 
 La PDFoj enhavas nur la kartojn kun la vortoj. Por ludi oni bezonas ankaŭ la kartojn kun la ciferoj kaj literoj. Ĉe BoardGameGeek estas [prova versio](https://boardgamegeek.com/filepage/204044/print-play) en la franca kaj la angla kiun oni povus kombini kun ĉi tiu esperanta versio por havi plenan printeblan version.
 
